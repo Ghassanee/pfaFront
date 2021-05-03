@@ -1,0 +1,19 @@
+.icon {
+  text-decoration: none;
+  color: black;
+  display: flex;
+  justify-content: space-between;
+}
+.routes {
+  text-decoration: none;
+  color: #fff;
+  font-size: 16px;
+  padding: 0.5rem 2rem;
+  margin: 1rem 0.5rem;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  background-color: rgba($color: #3f51b5, $alpha: 1);
+  padding: 1rem;
+}

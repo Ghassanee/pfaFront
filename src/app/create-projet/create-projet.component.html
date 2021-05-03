@@ -1,0 +1,151 @@
+<div class="container">
+  <mat-horizontal-stepper [linear]="true" #stepper class="form">
+    <mat-step
+      [stepControl]="firstFormGroup"
+      errorMessage="Tous les champs sont requis."
+    >
+      <form [formGroup]="firstFormGroup" style="width: 100%">
+        <ng-template matStepLabel>Remplissez les détails du projet</ng-template>
+        <mat-form-field class="example-full-width" appearance="outline">
+          <mat-label>Nom du projet</mat-label>
+          <input
+            matInput
+            placeholder="Last name, First name"
+            formControlName="name"
+            required
+          />
+        </mat-form-field>
+        <p>
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Description</mat-label>
+            <textarea
+              formControlName="description"
+              matInput
+              placeholder="Ex. 100 Main St"
+              required
+            ></textarea>
+          </mat-form-field>
+          <mat-form-field class="example-full-width" appearance="outline">
+            <mat-label>Critères</mat-label>
+            <mat-chip-list
+              #chipList
+              aria-label="Fruit selection"
+              formControlName="fruits"
+            >
+              <mat-chip
+                *ngFor="let fruit of fruits"
+                [selectable]="selectable"
+                [removable]="removable"
+                (removed)="remove(fruit)"
+              >
+                {{ fruit }}
+                <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>
+              </mat-chip>
+              <input
+                placeholder="New fruit..."
+                [matChipInputFor]="chipList"
+                [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                [matChipInputAddOnBlur]="addOnBlur"
+                (matChipInputTokenEnd)="add($event)"
+              />
+            </mat-chip-list>
+          </mat-form-field>
+        </p>
+        <div>
+          <button mat-button matStepperNext>Suivant</button>
+        </div>
+      </form>
+    </mat-step>
+
+    <mat-step [stepControl]="secondFormGroup" label="Fill out your address">
+      <form [formGroup]="secondFormGroup">
+        <ng-template matStepLabel>Ajouter des experts</ng-template>
+        <div class="input">
+          <mat-form-field class="field" appearance="outline">
+            <input
+              matInput
+              id="newAttributeCountry"
+              formControlName="newAttributeCountryName"
+              placeholder="Nom et prénom"
+              required
+            />
+          </mat-form-field>
+          <mat-form-field class="field" appearance="outline">
+            <input
+              matInput
+              id="newAttributeCountry"
+              formControlName="newAttributeCountryMail"
+              placeholder="E-mail"
+              required
+            />
+          </mat-form-field>
+          <button
+            mat-icon-button
+            color="primary"
+            aria-label="Example icon button with a home icon"
+            class="btn"
+          ></button>
+        </div>
+
+        <ng-container *ngFor="let field of fieldArray; let i = index">
+          <div class="input">
+            <mat-form-field class="field" appearance="outline">
+              <input
+                matInput
+                [formControlName]="'newAttributeCountryName' + i"
+                placeholder="Nom et prénom"
+                required
+              />
+            </mat-form-field>
+            <mat-form-field class="field" appearance="outline">
+              <input
+                matInput
+                [formControlName]="'newAttributeCountryMail' + i"
+                placeholder="E-mail"
+                required
+              />
+            </mat-form-field>
+            <button
+              (click)="deleteFieldValue(i)"
+              mat-icon-button
+              color="primary"
+              aria-label="Example icon button with a home icon"
+              class="btn"
+            >
+              <mat-icon aria-hidden="false" aria-label="Example add icon">
+                delete
+              </mat-icon>
+            </button>
+          </div>
+        </ng-container>
+        <button
+          mat-icon-button
+          color="primary"
+          aria-label="Example icon button with a home icon"
+          (click)="addFieldValue()"
+          class="btn"
+        >
+          <mat-icon aria-hidden="false" aria-label="Example add icon">
+            person_add_alt
+          </mat-icon>
+        </button>
+        <div>
+          <button mat-button matStepperPrevious>Retour</button>
+          <button mat-button matStepperNext>Suivant</button>
+        </div>
+      </form>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Dernière étape</ng-template>
+      <p *ngIf="!error">Vérifiez vos données avant de postuler.</p>
+      <p *ngIf="error" style="color: red; display: block">
+        Le nom du projet existe déjà.
+      </p>
+
+      <div>
+        <button mat-button matStepperPrevious>Retour</button>
+        <button mat-button (click)="submit()">Postuler</button>
+      </div>
+    </mat-step>
+  </mat-horizontal-stepper>
+</div>

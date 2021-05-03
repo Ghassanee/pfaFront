@@ -1,0 +1,30 @@
+<div class="example-container">
+  <div class="form-container">
+    <mat-card class="card">
+      <mat-card-title> Question</mat-card-title>
+      <mat-card-content>
+        <form [formGroup]="questionForm" (submit)="submitQst()">
+          <ng-container *ngFor="let qst of ate; let i = index">
+            <mat-form-field class="select" appearance="outline">
+              <mat-label>{{ qst }}</mat-label>
+              <mat-select [formControlName]="'qst' + i" required>
+                <mat-option>--</mat-option>
+                <mat-option *ngFor="let animal of animals" [value]="animal.val">
+                  {{ animal.name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </ng-container>
+          <button
+            [disabled]="!questionForm.valid"
+            mat-raised-button
+            color="primary"
+            type="submit"
+          >
+            Envoyer les réponses
+          </button>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>

@@ -1,0 +1,87 @@
+<div class="example-container">
+  <div class="form-container">
+    <mat-card class="card">
+      <mat-card-title>S'inscrire</mat-card-title>
+      <mat-card-content>
+        <form [formGroup]="signupForm" (submit)="signup()">
+          <mat-form-field class="form-field" appearance="outline">
+            <mat-label> E-mail </mat-label>
+            <input matInput formControlName="email" required />
+            <mat-error
+              *ngIf="
+                signupForm.controls.email.touched &&
+                signupForm.controls.email.invalid
+              "
+            >
+              <span *ngIf="signupForm.controls.email.errors!.required"
+                >Ce champ est obligatoire.</span
+              >
+              <span *ngIf="signupForm.controls.email.errors!.pattern"
+                >Ce champ n'est pas valide.</span
+              >
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="form-field" appearance="outline">
+            <mat-label> Nom d'utilisateur </mat-label>
+            <input matInput formControlName="login" required />
+            <mat-error
+              *ngIf="
+                signupForm.controls.login.touched &&
+                signupForm.controls.login.invalid
+              "
+            >
+              <span *ngIf="signupForm.controls.login.errors!.required"
+                >Ce champ est obligatoire.</span
+              >
+              <span *ngIf="signupForm.controls.login.errors!.pattern"
+                >Ce champ n'est pas valide.</span
+              >
+            </mat-error>
+          </mat-form-field>
+          <mat-form-field class="form-field" appearance="outline">
+            <mat-label>Mot de passe</mat-label>
+            <input
+              formControlName="password"
+              matInput
+              [type]="hide ? 'password' : 'text'"
+            />
+            <button
+              mat-icon-button
+              matSuffix
+              (click)="hide = !hide"
+              [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide"
+              type="button"
+            >
+              <mat-icon>{{ hide ? "visibility_off" : "visibility" }}</mat-icon>
+            </button>
+            <mat-error
+              *ngIf="
+                signupForm.controls.password.touched &&
+                signupForm.controls.password.invalid
+              "
+            >
+              <span *ngIf="signupForm.controls.password.errors!.required"
+                >Ce champ est obligatoire.</span
+              >
+            </mat-error>
+          </mat-form-field>
+          <button
+            [disabled]="!signupForm.valid"
+            mat-raised-button
+            color="primary"
+            type="submit"
+          >
+            s'inscrire
+          </button>
+          <span
+            *ngIf="error"
+            style="display: block; margin-top: 1rem; color: red"
+          >
+            Email ou Nom d'utilisateur déjà pris
+          </span>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</div>
